@@ -23,7 +23,7 @@ public class LogicTest {
         };
         assertThat(logic.isWin(), is(true));
     }
-    /*
+
     @Test
     public void whenHorizontalWin() {
         Logic logic = new Logic(5) {
@@ -40,7 +40,7 @@ public class LogicTest {
         };
         assertThat(logic.isWin(), is(true));
     }
-
+/*
     @Test
     public void whenNotWin() {
         Logic logic = new Logic(5) {

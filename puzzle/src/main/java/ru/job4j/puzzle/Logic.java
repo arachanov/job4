@@ -71,13 +71,13 @@ public class Logic {
         boolean result = true;
         for (int row = 0; row != table.length - 1; row++) {
             for (int col = 0; col != table.length - 1; col++) {
-                if (table[row][col] != table[row][col + 1]) {
+                if (table[row + 1][col] != table[row][col]) {
                     result = false;
                     break;
                 }
             }
         }
-      /*  if (!result) {
+       /* if (!result) {
             for (int row = 0; row != table.length - 1; row++) {
                 for (int col = 0; col != table.length - 1; col++) {
                     if (table[row][col] != table[row][col + 1]) {
