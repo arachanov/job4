@@ -1,15 +1,35 @@
 package ru.job4j.condition;
 
-/**
- * Класс Поинт для вычисления растояния между точками
- * @author Salim
- * @since 30.06.2019
- * @version 1
- */
+import static java.lang.Math.sqrt;
+import static java.lang.Math.pow;
+
 public class Point {
-    public double distance(int x1, int y1, int x2, int y2) {
-        double first = Math.pow(x2 - x1, 2);
-        double second = Math.pow(y2 - y1, 2);
-        return Math.sqrt(first + second);
+
+    /**
+     * Это поле объекта. Оно доступно только конкретному объекту.
+     */
+    private int x;
+
+    /**
+     * И это поле объекта. Оно доступно только конкретному объекту.
+     */
+    private int y;
+
+    /**
+     * Конструтор, который принимает начальное состояние объекта "точка"
+     * @param first координата x
+     * @param second координата y
+     */
+    public Point(int first, int second) {
+        this.x = first;
+        this.y = second;
+    }
+
+    public double distance(Point that) {
+        return sqrt(pow(this.x - that.x, 2) + pow(this.y - that.y, 2));
+    }
+
+    public void info() {
+        System.out.println(String.format("Point[%s, %s]", this.x, this.y));
     }
 }
