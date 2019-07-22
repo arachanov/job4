@@ -15,7 +15,16 @@ public class PointTest {
         System.out.println(String.format("Result is %s", result));
         assertThat(result, is(10D));
     }
-
+    @Test
+    public void when3dPoint() {
+        Point first = new Point(0, 0, 0);
+        Point second = new Point(0, 0, 10);
+        double result = first.distance3d(second);
+        first.info3d();
+        second.info3d();
+        System.out.println(String.format("Result is %s", result));
+        assertThat(result, is(10D));
+    }
     @Test
     public void whenCheckItself() {
         Point point = new Point(0, 0);
