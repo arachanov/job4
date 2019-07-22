@@ -49,7 +49,6 @@ public class Triangle {
         if (this.exist(a, b, c)) {
             rsl = Math.sqrt(p * (p - a) * (p - b) * (p - c));
         }
-
         return rsl;
     }
 }
