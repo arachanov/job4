@@ -1,12 +1,7 @@
 package ru.job4j.tracker;
 
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
 
-/**
- * @version $Id$
- * @since 0.1
- */
 public class Tracker {
     /**
      * Массив для хранение заявок.
@@ -19,50 +14,34 @@ public class Tracker {
      */
     private int position = 0;
 
+    public int getPosition() {
+        return position;
+    }
+
     /**
      * Метод реализаущий добавление заявки в хранилище
      * @param item новая заявка
      */
+
     public Item add(Item item) {
         item.setId(this.generateId());
         this.items[this.position++] = item;
         return item;
     }
 
-    /**
-     * Метод генерирует уникальный ключ для заявки.
-     * Так как у заявки нет уникальности полей, имени и описание. Для идентификации нам нужен уникальный ключ.
-     * @return Уникальный ключ.
-     */
-    private String generateId() {
-        //Реализовать метод генерации.
-        return String.valueOf(System.currentTimeMillis() + RN.nextInt());
-    }
-    public Item findById(String id) {
-        Item result = null;
-        for (Item item: items) {
-            if (item != null && item.getId().equals(id)) {
-                result = item;
-                break;
-            }
-        }
-        return result;
-    }
     public boolean replace(String id, Item item) {
         boolean result = false;
-        for (Item replaceTo : items) {
-            if (replaceTo != null && replaceTo.getId().equals(id)) {
-                replaceTo.setName(item.getName());
-                replaceTo.setDecs(item.getDecs());
-                replaceTo.setTime(item.getTime());
+        for (int i = 0; i != this.position; i++) {
+            if (this.items[i] != null && this.items[i].getId().equals(id)) {
+                this.items[i] = item;
                 result = true;
                 break;
             }
-
         }
         return result;
     }
-    public  boolean delete(String id) {
+
+    public boolean delete(String id) {
         boolean result = false;
         for (int i = 0; i < this.position; i++) {
             if (this.items[i].getId().equals(id)) {
@@ -74,21 +53,41 @@ public class Tracker {
         }
         return result;
     }
+
     public Item[] findAll() {
-        for (int i = 0; i < this.position; i++) {
-            if (this.items[i] == null) {
-                break;
-            }
-        }
-        return Arrays.copyOf(this.items, this.position);
-    }
-    public Item[] findByName(String key) {
-        for (int i = 0; i < this.position; i++) {
-            if (this.items[i].getName().equals(key)) {
-                break;
-            }
-        }
         return Arrays.copyOf(this.items, this.position);
     }
 
+    public Item[] findByName(String key) {
+        Item[] equalName = new Item[position];
+        int pos = 0;
+            for (int i = 0; i < this.position; i++) {
+                if (this.items[i].getName().equals(key)) {
+                    equalName[pos] = this.items[i];
+                    pos++;
+                }
+            }
+            return Arrays.copyOf(equalName, pos);
+        }
+
+    public Item findById(String id) {
+        Item result = null;
+        for (int i = 0; i != position; i++) {
+            if (items[i] != null && items[i].getId().equals(id)) {
+                result = items[i];
+                break;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Метод генерирует уникальный ключ для задаявки.
+     * Так как у заявки нет уникальности полей, имени и описание. Для идентификации нам нужен уникальный ключ.
+     * @return Уникальный ключ.
+     */
+    private String generateId() {
+        //Реализовать метод генерации.
+        return String.valueOf(System.currentTimeMillis() + RN.nextInt());
+    }
 }
