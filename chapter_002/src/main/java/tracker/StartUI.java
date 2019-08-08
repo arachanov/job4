@@ -61,16 +61,18 @@ public class StartUI {
            }
         }
     }
-    public void showItem() {
+    public String showItem() {
+        StringBuilder res = new StringBuilder();
         if (tracker.getPosition() > 0) {
             Item[] items = new Item[tracker.getPosition()];
             items = this.tracker.findAll();
             for (int i = 0; i != items.length; i++) {
-                System.out.println(items[i].getName());
+                    res.append(items[i].getName());
             }
         } else {
-            System.out.println("Нет заявок");
+            res.append("Нет заявок");
         }
+        return res.toString();
     }
     public void editItem() {
         if (tracker.getPosition() > 0) {
@@ -100,7 +102,7 @@ public class StartUI {
         if (tracker.getPosition() > 0) {
             String id = this.input.ask("Введите ID заявки для поиска");
             Item item = this.tracker.findById(id);
-                System.out.println(item.getName()+" найден");
+                System.out.println(item.getName() + " найден");
         } else {
             System.out.println("Нет заявок");
         }
@@ -110,7 +112,7 @@ public class StartUI {
             String name = this.input.ask("Введите имя заявки для поиска");
             Item[] item = this.tracker.findByName(name);
             for (int i = 0; i != item.length; i++) {
-                System.out.println("найдено совпадающее имя "+item[i].getName() + " ID " + item[i].getId());
+                System.out.println("найдено совпадающее имя " + item[i].getName() + " ID " + item[i].getId());
             }
         } else {
             System.out.println("Нет заявок");
