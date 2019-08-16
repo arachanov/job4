@@ -1,5 +1,8 @@
 package ru.job4j.tracker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @version $Id$
  * @since 0.1
@@ -19,6 +22,7 @@ public class StartUI {
      * Получение данных от пользователя.
      */
     private final Input input;
+    private int[] ranges = new int[] {0, 1, 2, 3, 4, 5, 6};
 
     /**
      * Хранилище заявок.
@@ -38,7 +42,7 @@ public class StartUI {
     /**
      * Основой цилк программы.
      */
-    public void init() {
+   /* public void init() {
         boolean exit = false;
         while (!exit) {
             this.showMenu();
@@ -60,29 +64,36 @@ public class StartUI {
                 exit = true;
            }
         }
+    }*/
+    public void init() {
+        MenuTracker menu = new MenuTracker(this.input, this.tracker);
+        int[] range = new int[menu.getActionsLength()];
+        menu.fillActions();
+
+        do {
+            menu.show();
+            menu.select(input.ask("select:", ranges));
+        } while (!"y".equals(this.input.ask("Exit?(y): ")));
     }
-    public String showItem() {
-        StringBuilder res = new StringBuilder();
+    public void showItem() {
         if (tracker.getPosition() > 0) {
-            Item[] items = new Item[tracker.getPosition()];
-            items = this.tracker.findAll();
+            Item[] items = this.tracker.findAll();
             for (int i = 0; i != items.length; i++) {
-                    res.append(items[i].getName());
+                System.out.print(items[i]);
             }
         } else {
-            res.append("Нет заявок");
+            System.out.println("Нет заявок");
         }
-        return res.toString();
     }
     public void editItem() {
         if (tracker.getPosition() > 0) {
-            String id = this.input.ask("Введите ID заявки для редактирования");
-            System.out.println("------------ Добавление новой языки --------------");
-            String name = this.input.ask("Введите имя заявки :");
-            String desc = this.input.ask("Введите описание заявки :");
+            String id = this.input.ask("Enter ID for change");
+            System.out.println("--------------------------");
+            String name = this.input.ask("Enter item name");
+            String desc = this.input.ask("Enter descritpion name");
             Item item = new Item(name, desc, 20190802);
             if (this.tracker.replace(id, item)) {
-                System.out.println("Редактирование выполнено");
+                System.out.println("Edit succes");
             }
         } else {
             System.out.println("Нет заявок");
@@ -102,7 +113,7 @@ public class StartUI {
         if (tracker.getPosition() > 0) {
             String id = this.input.ask("Введите ID заявки для поиска");
             Item item = this.tracker.findById(id);
-                System.out.println(item.getName() + " найден");
+                System.out.print(item);
         } else {
             System.out.println("Нет заявок");
         }
@@ -112,7 +123,7 @@ public class StartUI {
             String name = this.input.ask("Введите имя заявки для поиска");
             Item[] item = this.tracker.findByName(name);
             for (int i = 0; i != item.length; i++) {
-                System.out.println("найдено совпадающее имя " + item[i].getName() + " ID " + item[i].getId());
+                System.out.print(item[i]);
             }
         } else {
             System.out.println("Нет заявок");
@@ -123,16 +134,16 @@ public class StartUI {
      * Метод реализует добавленяи новый заявки в хранилище.
      */
     private void createItem() {
-        System.out.println("------------ Добавление новой языки --------------");
-        String name = this.input.ask("Введите имя заявки :");
-        String desc = this.input.ask("Введите описание заявки :");
+        System.out.println("------------New item--------------");
+        String name = this.input.ask("New item name");
+        String desc = this.input.ask("New desc");
         Item item = new Item(name, desc, 20190802);
        this.tracker.add(item);
-       System.out.println("------------ Новая заявка с getId : " + item.getId() + "-----------");
+       System.out.println("------------ Item with getId : " + item.getId() + "-----------");
     }
 
     private void showMenu() {
-        System.out.println("Меню.\n" + "0. Add new Item\n" + "1. Show all items\n" + "2. Edit item\n" + "3. Delete item\n" + "4. Find item by Id\n" +  "5. Find items by name\n" +  "6. Exit Program\n" +  "Select:");
+        System.out.print("Menu.\n" + "0. Add new Item\n" + "1. Show all items\n" + "2. Edit item\n" + "3. Delete item\n" + "4. Find item by Id\n" +  "5. Find items by name\n" +  "6. Exit Program\n" +  "Select:");
     }
 
     /**
@@ -140,6 +151,6 @@ public class StartUI {
      * @param args
      */
     public static void main(String[] args) {
-        new StartUI(new ConsoleInput(), new Tracker()).init();
+        new StartUI(new ValidateInput(), new Tracker()).init();
     }
 }
