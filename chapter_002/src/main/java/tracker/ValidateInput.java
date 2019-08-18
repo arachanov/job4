@@ -9,8 +9,8 @@ public class ValidateInput extends ConsoleInput {
         int value = -1;
         do {
             try {
-                invalid = false;
                 value = super.ask(question, range);
+                invalid = false;
             } catch (MenuOutException moe) {
                 System.out.println("Please select key from menu");
             } catch (NumberFormatException nfe) {
